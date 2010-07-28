@@ -2,7 +2,7 @@
 
 ## Make dist-zilla happy
 package
-  httpthis;
+  http_this;
 
 use strict;
 use warnings;
