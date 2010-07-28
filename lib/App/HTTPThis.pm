@@ -12,7 +12,7 @@ use Plack::Handler::Standalone;
 
 sub new {
   my $class = shift;
-  
+
   return bless {}, $class;
 }
 
@@ -21,7 +21,7 @@ sub run {
 
   my $server = Plack::Handler::Standalone->new(port => 7007);
   print "Open your browser at http://127.0.0.1:7007/\n";
-  
+
   $server->run(Plack::App::Directory->new->to_app);
 }
 
