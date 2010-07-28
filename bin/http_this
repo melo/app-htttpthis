@@ -21,7 +21,9 @@ __END__
 
     ## Export the current directory with HTTP
     $ http_this
-    Open your browser at URL
+
+    ## Start the server on a specific port
+    $ http_this --port 9001
 
     ## Show documentation about our options
     $ http_this --help
@@ -46,6 +48,10 @@ URL the script outputs.
 The following options are available:
 
 =over 4
+
+=item --port PORT
+
+Start the HTTP server on a specific C<PORT>.
 
 =item --help
 
