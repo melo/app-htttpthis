@@ -1,7 +1,13 @@
 #!/usr/bin/env perl
 
+## Make dist-zilla happy
+package
+  httpthis;
+
 use strict;
 use warnings;
 use App::HTTPThis;
+
+# ABSTRACT: export the current directory over HTTP
 
 App::HTTPThis->new->run;

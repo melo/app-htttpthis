@@ -1,5 +1,7 @@
 package App::HTTPThis;
 
+# ABSTRACT: Export the current directory over HTTP
+
 use strict;
 use warnings;
 use Plack::App::Directory;
