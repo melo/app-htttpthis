@@ -61,3 +61,18 @@ sub run {
 
 This class implements all the logic of the L<http_this> command.
 
+Actually, this is just a very thin wrapper around
+L<Plack::App::Directory>, that is where the magic really is.
+
+
+=head1 SEE ALSO
+
+L<http_this>, L<Plack>, and L<Plack::App::Directory>.
+
+
+=head1 THANKS
+
+And the Oscar goes to: Tatsuhiko Miyagawa.
+
+For L<Plack>, L<Plack::App::Directory> and many many others.
+
