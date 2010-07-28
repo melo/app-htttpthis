@@ -1,7 +1,38 @@
 #!/usr/bin/env perl
 
+## Make dist-zilla happy
+package
+  httpthis;
+
 use strict;
 use warnings;
 use App::HTTPThis;
 
+# ABSTRACT: export the current directory over HTTP
 App::HTTPThis->new->run;
+
+__END__
+=pod
+
+=head1 NAME
+
+httpthis - export the current directory over HTTP
+
+=head1 VERSION
+
+version 0.001
+
+=head1 AUTHOR
+
+Pedro Melo <melo@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2010 by Pedro Melo.
+
+This is free software, licensed under:
+
+  The Artistic License 2.0
+
+=cut
+
