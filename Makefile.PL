@@ -22,8 +22,10 @@ my %WriteMakefileArgs = (
   'LICENSE' => 'artistic_2',
   'NAME' => 'App::HTTPThis',
   'PREREQ_PM' => {
+    'Getopt::Long' => '0',
     'Plack::App::Directory' => '0',
-    'Plack::Handler::Standalone' => '0'
+    'Plack::Handler::Standalone' => '0',
+    'Pod::Usage' => '0'
   },
   'VERSION' => '0.001',
   'test' => {

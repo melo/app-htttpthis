@@ -21,8 +21,10 @@
       },
       "runtime" : {
          "requires" : {
+            "Getopt::Long" : 0,
             "Plack::App::Directory" : 0,
-            "Plack::Handler::Standalone" : 0
+            "Plack::Handler::Standalone" : 0,
+            "Pod::Usage" : 0
          }
       }
    },

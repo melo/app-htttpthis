@@ -9,11 +9,19 @@ use strict;
 use warnings;
 use Plack::App::Directory;
 use Plack::Handler::Standalone;
+use Getopt::Long;
+use Pod::Usage;
 
 sub new {
   my $class = shift;
+  my $self = bless {}, $class;
 
-  return bless {}, $class;
+  GetOptions($self, "help", "man") || pod2usage(2);
+  pod2usage(1) if $self->{help};
+  pod2usage(-verbose => 2) if $self->{man};
+
+#  pod2usage("$0: Too many files given.\n")  if @ARGV > 1;
+  return $self;
 }
 
 sub run {
