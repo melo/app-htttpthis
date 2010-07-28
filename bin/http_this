@@ -28,18 +28,18 @@ version 0.001
 =head1 SYNOPSIS
 
     ## Export the current directory with HTTP
-    $ http-this
+    $ http_this
     Open your browser at URL
 
     ## Show documentation about our options
-    $ http-this --help
+    $ http_this --help
 
     ## Show the entire man page
-    $ http-this --man
+    $ http_this --man
 
 =head1 DESCRIPTION
 
-The C<http-this> command line exports the current directory via HTTP.
+The C<http_this> command line exports the current directory via HTTP.
 
 A simple web server is started and is kept running until you kill it
 with C<Ctrl-C>.
