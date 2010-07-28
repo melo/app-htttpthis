@@ -6,7 +6,7 @@ META.json
 META.yml
 Makefile.PL
 README
-bin/http-this
+bin/http_this
 dist.ini
 lib/App/HTTPThis.pm
 t/00-compile.t

@@ -17,7 +17,7 @@ my %WriteMakefileArgs = (
   },
   'DISTNAME' => 'App-HTTPThis',
   'EXE_FILES' => [
-    'bin/http-this'
+    'bin/http_this'
   ],
   'LICENSE' => 'artistic_2',
   'NAME' => 'App::HTTPThis',

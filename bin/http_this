@@ -2,7 +2,7 @@
 
 ## Make dist-zilla happy
 package
-  http-this;
+  http_this;
 
 use strict;
 use warnings;
@@ -19,7 +19,7 @@ App::HTTPThis->new->run;
 
 =head1 NAME
 
-http - export the current directory over HTTP
+http_this - export the current directory over HTTP
 
 =head1 VERSION
 
