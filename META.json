@@ -22,6 +22,7 @@
       "runtime" : {
          "requires" : {
             "Getopt::Long" : 0,
+            "Net::Rendezvous::Publish" : "0.04",
             "Plack::App::Directory" : 0,
             "Plack::Handler::Standalone" : 0,
             "Pod::Usage" : 0
@@ -36,6 +37,6 @@
          "web" : "http://github.com/melo/app-httpthis/"
       }
    },
-   "version" : "0.001"
+   "version" : "0.002"
 }
 

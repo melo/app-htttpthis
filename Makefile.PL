@@ -23,11 +23,12 @@ my %WriteMakefileArgs = (
   'NAME' => 'App::HTTPThis',
   'PREREQ_PM' => {
     'Getopt::Long' => '0',
+    'Net::Rendezvous::Publish' => '0.04',
     'Plack::App::Directory' => '0',
     'Plack::Handler::Standalone' => '0',
     'Pod::Usage' => '0'
   },
-  'VERSION' => '0.001',
+  'VERSION' => '0.002',
   'test' => {
     'TESTS' => 't/*.t'
   }

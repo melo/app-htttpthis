@@ -1,6 +1,6 @@
 package App::HTTPThis;
 BEGIN {
-  $App::HTTPThis::VERSION = '0.001';
+  $App::HTTPThis::VERSION = '0.002';
 }
 
 # ABSTRACT: Export the current directory over HTTP
@@ -8,7 +8,7 @@ BEGIN {
 use strict;
 use warnings;
 use Plack::App::Directory;
-use Plack::Handler::Standalone;
+use Plack::Runner;
 use Getopt::Long;
 use Pod::Usage;
 
@@ -17,7 +17,7 @@ sub new {
   my $class = shift;
   my $self = bless {port => 7007, root => '.'}, $class;
 
-  GetOptions($self, "help", "man", "port=i") || pod2usage(2);
+  GetOptions($self, "help", "man", "port=i", "name=s") || pod2usage(2);
   pod2usage(1) if $self->{help};
   pod2usage(-verbose => 2) if $self->{man};
 
@@ -35,11 +35,49 @@ sub new {
 sub run {
   my ($self) = @_;
 
-  my $server = Plack::Handler::Standalone->new(port => $self->{port});
-  print "Exporting '$self->{root}' available at:\n";
-  print "   http://127.0.0.1:$self->{port}/\n";
+  my $runner = Plack::Runner->new;
+  $runner->parse_options(
+    '--port'         => $self->{port},
+    '--env'          => 'production',
+    '--server_ready' => sub { $self->_server_ready(@_) },
+  );
 
-  $server->run(Plack::App::Directory->new({root => $self->{root}})->to_app);
+  eval {
+    $runner->run(Plack::App::Directory->new({root => $self->{root}})->to_app);
+  };
+  if (my $e = $@) {
+    die "FATAL: port $self->{port} is already in use, try another one\n"
+      if $e =~ /failed to listen to port/;
+    die "FATAL: internal error - $e\n";
+  }
+}
+
+sub _server_ready {
+  my ($self, $args) = @_;
+
+  my $host  = $args->{host}  || '127.0.0.1';
+  my $proto = $args->{proto} || 'http';
+  my $port  = $args->{port};
+
+  print "Exporting '$self->{root}', available at:\n";
+  print "   $proto://$host:$port/\n";
+
+  return unless my $name = $self->{name};
+
+  eval {
+    require Net::Rendezvous::Publish;
+    Net::Rendezvous::Publish->new->publish(
+      name   => $name,
+      type   => '_http._tcp',
+      port   => $port,
+      domain => 'local',
+    );
+  };
+  if ($@) {
+    print "\nWARNING: your server will not be published over Bonjour\n";
+    print "    Install one of the Net::Rendezvous::Publish::Backend\n";
+    print "    modules from CPAN\n"
+  }
 }
 
 1;
@@ -54,7 +92,7 @@ App::HTTPThis - Export the current directory over HTTP
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 

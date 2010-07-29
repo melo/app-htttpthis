@@ -23,7 +23,7 @@ http_this - export the current directory over HTTP
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 

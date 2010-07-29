@@ -14,9 +14,10 @@ meta-spec:
 name: App-HTTPThis
 requires:
   Getopt::Long: 0
+  Net::Rendezvous::Publish: 0.04
   Plack::App::Directory: 0
   Plack::Handler::Standalone: 0
   Pod::Usage: 0
 resources:
   repository: http://github.com/melo/app-httpthis.git
-version: 0.001
+version: 0.002
