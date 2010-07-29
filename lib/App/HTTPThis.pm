@@ -5,7 +5,7 @@ package App::HTTPThis;
 use strict;
 use warnings;
 use Plack::App::Directory;
-use Plack::Handler::Standalone;
+use Plack::Runner;
 use Getopt::Long;
 use Pod::Usage;
 
@@ -43,11 +43,29 @@ Start the HTTP server.
 sub run {
   my ($self) = @_;
 
-  my $server = Plack::Handler::Standalone->new(port => $self->{port});
-  print "Exporting '$self->{root}', available at:\n";
-  print "   http://127.0.0.1:$self->{port}/\n";
+  my $runner = Plack::Runner->new;
+  $runner->parse_options(
+    '--port'         => $self->{port},
+    '--env'          => 'production',
+    '--server_ready' => sub {
+      my ($args) = @_;
 
-  $server->run(Plack::App::Directory->new({root => $self->{root}})->to_app);
+      my $host  = $args->{host}  || '127.0.0.1';
+      my $proto = $args->{proto} || 'http';
+
+      print "Exporting '$self->{root}', available at:\n";
+      print "   $proto://$host:$args->{port}/\n";
+    }
+  );
+
+  eval {
+    $runner->run(Plack::App::Directory->new({root => $self->{root}})->to_app);
+  };
+  if (my $e = $@) {
+    die "FATAL: port $self->{port} is already in use, try another one\n"
+      if $e =~ /failed to listen to port/;
+    die "FATAL: internal error - $e\n";
+  }
 }
 
 1;
