@@ -25,7 +25,7 @@ my %WriteMakefileArgs = (
     'Getopt::Long' => '0',
     'Net::Rendezvous::Publish' => '0.04',
     'Plack::App::Directory' => '0',
-    'Plack::Handler::Standalone' => '0',
+    'Plack::Runner' => '0',
     'Pod::Usage' => '0'
   },
   'VERSION' => '0.002',

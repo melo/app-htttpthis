@@ -118,7 +118,7 @@ Start the HTTP server.
 
 =head1 SEE ALSO
 
-L<http_this>, L<Plack>, and L<Plack::App::Directory>.
+L<http_this>, L<Plack>, L<Plack::App::Directory>, and L<Net::Rendezvous::Publish>.
 
 =head1 THANKS
 
