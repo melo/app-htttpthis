@@ -44,7 +44,7 @@ sub run {
   my ($self) = @_;
 
   my $server = Plack::Handler::Standalone->new(port => $self->{port});
-  print "Exporting '$self->{root}' available at:\n";
+  print "Exporting '$self->{root}', available at:\n";
   print "   http://127.0.0.1:$self->{port}/\n";
 
   $server->run(Plack::App::Directory->new({root => $self->{root}})->to_app);
