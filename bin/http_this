@@ -28,6 +28,9 @@ __END__
     ## Start the server on a specific port
     $ http_this --port 9001
 
+    ## Announces the HTTP server via Bonjour with the specified name
+    $ http_this --name "My cool webserver"
+
     ## Show documentation about our options
     $ http_this --help
 
@@ -62,6 +65,15 @@ The following options are available:
 =item --port PORT
 
 Start the HTTP server on a specific C<PORT>.
+
+=item --name NAME
+
+Announces the server over Bonjour.
+
+This feature requires the L<Net::Rendezvous::Publish> module and the
+appropriate backend for your operating system, both available from
+L<CPAN|http://search.cpan.org/>. If one of them cannot be found, a
+warning message will be displayed.
 
 =item --help
 

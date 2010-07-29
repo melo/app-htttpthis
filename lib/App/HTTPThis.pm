@@ -20,7 +20,7 @@ sub new {
   my $class = shift;
   my $self = bless {port => 7007, root => '.'}, $class;
 
-  GetOptions($self, "help", "man", "port=i") || pod2usage(2);
+  GetOptions($self, "help", "man", "port=i", "name=s") || pod2usage(2);
   pod2usage(1) if $self->{help};
   pod2usage(-verbose => 2) if $self->{man};
 
@@ -69,6 +69,23 @@ sub _server_ready {
 
   print "Exporting '$self->{root}', available at:\n";
   print "   $proto://$host:$port/\n";
+
+  return unless my $name = $self->{name};
+
+  eval {
+    require Net::Rendezvous::Publish;
+    Net::Rendezvous::Publish->new->publish(
+      name   => $name,
+      type   => '_http._tcp',
+      port   => $port,
+      domain => 'local',
+    );
+  };
+  if ($@) {
+    print "\nWARNING: your server will not be published over Bonjour\n";
+    print "    Install one of the Net::Rendezvous::Publish::Backend\n";
+    print "    modules from CPAN\n"
+  }
 }
 
 1;
@@ -88,7 +105,7 @@ L<Plack::App::Directory>, that is where the magic really is.
 
 =head1 SEE ALSO
 
-L<http_this>, L<Plack>, and L<Plack::App::Directory>.
+L<http_this>, L<Plack>, L<Plack::App::Directory>, and L<Net::Rendezvous::Publish>.
 
 
 =head1 THANKS
