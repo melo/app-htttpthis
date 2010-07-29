@@ -47,15 +47,7 @@ sub run {
   $runner->parse_options(
     '--port'         => $self->{port},
     '--env'          => 'production',
-    '--server_ready' => sub {
-      my ($args) = @_;
-
-      my $host  = $args->{host}  || '127.0.0.1';
-      my $proto = $args->{proto} || 'http';
-
-      print "Exporting '$self->{root}', available at:\n";
-      print "   $proto://$host:$args->{port}/\n";
-    }
+    '--server_ready' => sub { $self->_server_ready(@_) },
   );
 
   eval {
@@ -66,6 +58,17 @@ sub run {
       if $e =~ /failed to listen to port/;
     die "FATAL: internal error - $e\n";
   }
+}
+
+sub _server_ready {
+  my ($self, $args) = @_;
+
+  my $host  = $args->{host}  || '127.0.0.1';
+  my $proto = $args->{proto} || 'http';
+  my $port  = $args->{port};
+
+  print "Exporting '$self->{root}', available at:\n";
+  print "   $proto://$host:$port/\n";
 }
 
 1;
