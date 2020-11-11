@@ -6,6 +6,7 @@ use strict;
 use warnings;
 use Plack::App::Directory;
 use Plack::Runner;
+use Plack::Builder;
 use Getopt::Long;
 use Pod::Usage;
 
@@ -20,7 +21,7 @@ sub new {
   my $class = shift;
   my $self = bless {port => 7007, root => '.'}, $class;
 
-  GetOptions($self, "help", "man", "port=i", "name=s") || pod2usage(2);
+  GetOptions($self, "help", "man", "port=i", "name=s", "autoindex") || pod2usage(2);
   pod2usage(1) if $self->{help};
   pod2usage(-verbose => 2) if $self->{man};
 
@@ -48,10 +49,18 @@ sub run {
     '--port'         => $self->{port},
     '--env'          => 'production',
     '--server_ready' => sub { $self->_server_ready(@_) },
+    '--autoindex'    => 0,
   );
 
   eval {
-    $runner->run(Plack::App::Directory->new({root => $self->{root}})->to_app);
+    my $app = Plack::App::Directory->new({root => $self->{root}})->to_app;
+
+    if ($self->{autoindex}) {
+      my $builder = Plack::Builder->new;
+      $builder->add_middleware('DirIndex');
+      $app = $builder->wrap($app);
+    }
+    $runner->run($app);
   };
   if (my $e = $@) {
     die "FATAL: port $self->{port} is already in use, try another one\n"
