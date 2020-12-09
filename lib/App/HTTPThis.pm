@@ -4,7 +4,7 @@ package App::HTTPThis;
 
 use strict;
 use warnings;
-use Plack::App::Directory;
+use Plack::App::DirectoryIndex;
 use Plack::Runner;
 use Getopt::Long;
 use Pod::Usage;
@@ -55,7 +55,7 @@ sub run {
   $app_config->{dir_index} = 'index.html' if $self->{autoindex};
 
   eval {
-    $runner->run(Plack::App::Directory->new( $app_config )->to_app);
+    $runner->run(Plack::App::DirectoryIndex->new( $app_config )->to_app);
   };
   if (my $e = $@) {
     die "FATAL: port $self->{port} is already in use, try another one\n"
